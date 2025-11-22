@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>冬季健康自测问卷</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f2f7fb;
+        padding: 20px;
+        color: #333;
+        line-height: 1.6;
+    }
+    .container {
+        max-width: 700px;
+        margin: 0 auto;
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+        text-align: center;
+        color: #005ea6;
+    }
+    .question {
+        margin-bottom: 18px;
+        padding: 12px;
+        background: #f9fcff;
+        border-left: 4px solid #007bd9;
+        border-radius: 6px;
+    }
+    button {
+        width: 100%;
+        padding: 12px;
+        margin-top: 20px;
+        background: #007bd9;
+        color: white;
+        border: none;
+        font-size: 16px;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+    button:hover {
+        background: #005fa8;
+    }
+    #resultBox {
+        margin-top: 25px;
+        padding: 15px;
+        background: #e8f4ff;
+        border-radius: 8px;
+        display: none;
+    }
+</style>
+</head>
+
+<body>
+<div class="container">
+    <h2>冬季健康自测问卷</h2>
+    <p style="text-align:center; color:#666;">请根据最近两周的状态作答</p>
+
+    <form id="healthForm">
+
+        <!-- 题目 1 -->
+        <div class="question">
+            1. 最近是否出现咳嗽、流鼻涕、喉咙痒等呼吸道不适？
+            <br>
+            <label><input type="radio" name="q1" value="3"> 经常发生</label><br>
+            <label><input type="radio" name="q1" value="2"> 偶尔发生</label><br>
+            <label><input type="radio" name="q1" value="1"> 很少或没有</label>
+        </div>
+
+        <!-- 题目 2 -->
+        <div class="question">
+            2. 是否感到手脚冰凉、畏寒？
+            <br>
+            <label><input type="radio" name="q2" value="3"> 经常</label><br>
+            <label><input type="radio" name="q2" value="2"> 偶尔</label><br>
+            <label><input type="radio" name="q2" value="1"> 很少</label>
+        </div>
+
+        <!-- 题目 3 -->
+        <div class="question">
+            3. 最近睡眠是否充足？
+            <br>
+            <label><input type="radio" name="q3" value="1"> 很充足</label><br>
+            <label><input type="radio" name="q3" value="2"> 一般</label><br>
+            <label><input type="radio" name="q3" value="3"> 不太充足</label>
+        </div>
+
+        <!-- 题目 4 -->
+        <div class="question">
+            4. 是否感觉比平时更容易疲劳？
+            <br>
+            <label><input type="radio" name="q4" value="3"> 明显容易疲劳</label><br>
+            <label><input type="radio" name="q4" value="2"> 偶尔</label><br>
+            <label><input type="radio" name="q4" value="1"> 很少</label>
+        </div>
+
+        <!-- 题目 5 -->
+        <div class="question">
+            5. 冬季户外活动和运动量如何？
+            <br>
+            <label><input type="radio" name="q5" value="1"> 保持规律运动</label><br>
+            <label><input type="radio" name="q5" value="2"> 偶尔运动</label><br>
+            <label><input type="radio" name="q5" value="3"> 很少运动</label>
+        </div>
+
+        <!-- 题目 6 -->
+        <div class="question">
+            6. 是否经常熬夜或作息不规律？
+            <br>
+            <label><input type="radio" name="q6" value="3"> 经常</label><br>
+            <label><input type="radio" name="q6" value="2"> 偶尔</label><br>
+            <label><input type="radio" name="q6" value="1"> 基本规律</label>
+        </div>
+
+        <!-- 题目 7 -->
+        <div class="question">
+            7. 冬季饮食是否偏油腻或蔬菜水果摄入不足？
+            <br>
+            <label><input type="radio" name="q7" value="3"> 经常如此</label><br>
+            <label><input type="radio" name="q7" value="2"> 偶尔</label><br>
+            <label><input type="radio" name="q7" value="1"> 饮食比较均衡</label>
+        </div>
+
+        <button type="button" onclick="calculateScore()">提交测评</button>
+    </form>
+
+    <div id="resultBox">
+        <h3>测评结果</h3>
+        <p id="score"></p>
+        <p id="evaluation"></p>
+    </div>
+
+</div>
+
+<script>
+function calculateScore() {
+    let form = document.getElementById("healthForm");
+    let score = 0;
+
+    for (let i = 1; i <= 7; i++) {
+        let q = form["q" + i];
+        if (!q.value) {
+            alert("第 " + i + " 题还没作答哦！");
+            return;
+        }
+        score += parseInt(q.value);
+    }
+
+    document.getElementById("resultBox").style.display = "block";
+    document.getElementById("score").innerHTML = "您的健康风险总分为：<b>" + score + "</b>";
+
+    let evalText = "";
+
+    if (score <= 11) {
+        evalText = "当前状态不错，冬季健康状况良好，请继续保持！❄💪";
+    } else if (score <= 16) {
+        evalText = "有轻度健康风险，建议注意保暖、规律作息，多补水、多运动。⚠";
+    } else if (score <= 21) {
+        evalText = "健康风险偏高，近期可能免疫力较弱，需要改善睡眠和饮食，适当补充维C。❗";
+    } else {
+        evalText = "风险较高，请关注自身状况，如有不适建议及时就医。⛔";
+    }
+
+    document.getElementById("evaluation").innerHTML = evalText;
+}
+</script>
+
+</body>
+</html>
